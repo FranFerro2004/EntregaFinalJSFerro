@@ -13,7 +13,6 @@ let mensajeUsuario = "Lista de productos: \n\n";
 
 let carrito = [];
 
-let  valorDelCarrito = 0
 
 let nuevoValorDeCarrito = 0
 
@@ -24,14 +23,11 @@ function agrgarObjetoAlCarrito(productoEncontrado){
 }
 
 
-function precioFinalCarrito(){
-    for(let producto of carrito){
-        valorDelCarrito += producto.Precio;
-
-    }
-
-    return valorDelCarrito
-
+function precioFinalCarrito() {
+	valorDelCarrito = 0;
+	for (let producto of carrito) {
+		valorDelCarrito += producto.Precio;
+	}
 }
 
 function sacarObjetoDeCarrito(productoDeCarritoEncontrado){
@@ -88,7 +84,7 @@ if(resultado3 === "si"){
 
     if (productoDeCarritoEncontrado){
 
-    sacarObjetoDeCarrito()
+    sacarObjetoDeCarrito(productoDeCarritoEncontrado)
 
     } else {
 
