@@ -1,97 +1,83 @@
 
-
 const listaDeProductos = [
-    { Nombre: "Zapatilla", Precio: 10000, Marca: "Nike", Codigo: "2001", Descuento: true},
-    { Nombre: "Pantalon", Precio: 5000, Marca: "Adidas", Codigo: "6071", Descuento: false},
-    { Nombre: "Mochila", Precio: 9000, Marca: "Underarmour", Codigo: "8933", Descuento: false},
-    { Nombre: "Buzo", Precio: 9500, Marca: "Nike", Codigo: "7901", Descuento: true},
-    { Nombre: "Campera", Precio: 12000, Marca: "Adidas", Codigo: "3566", Descuento: false},
-    { Nombre: "Medias", Precio: 1000, Marca: "Nike", Codigo: "2456", Descuento: true},
+	{ Nombre: "Zapatilla", Precio: 10000, Marca: "Nike", Codigo: "2001", Descuento: true },
+	{ Nombre: "Pantalon", Precio: 5000, Marca: "Adidas", Codigo: "6071", Descuento: false },
+	{ Nombre: "Mochila", Precio: 9000, Marca: "Underarmour", Codigo: "8933", Descuento: false },
+	{ Nombre: "Buzo", Precio: 9500, Marca: "Nike", Codigo: "7901", Descuento: true },
+	{ Nombre: "Campera", Precio: 12000, Marca: "Adidas", Codigo: "3566", Descuento: false },
+	{ Nombre: "Medias", Precio: 1000, Marca: "Nike", Codigo: "2456", Descuento: true },
 ];
 
 let mensajeUsuario = "Lista de productos: \n\n";
 
 let carrito = [];
 
+let valorDelCarrito = 0;
 
-let nuevoValorDeCarrito = 0
+let nuevoValorDeCarrito = 0;
 
-function agrgarObjetoAlCarrito(productoEncontrado){
-    carrito.push(productoEncontrado)
-    alert (` ${productoEncontrado.Nombre} se agrego al carrito y tiene un precio de ${productoEncontrado.Precio}`)
-
+function agrgarObjetoAlCarrito(productoEncontrado) {
+	carrito.push(productoEncontrado);
+	alert(` ${productoEncontrado.Nombre} se agrego al carrito y tiene un precio de ${productoEncontrado.Precio}`);
 }
-
 
 function precioFinalCarrito() {
 	valorDelCarrito = 0;
 	for (let producto of carrito) {
 		valorDelCarrito += producto.Precio;
 	}
+
+	return valorDelCarrito;
 }
 
-function sacarObjetoDeCarrito(productoDeCarritoEncontrado){
-    carrito = carrito.filter(producto => producto.Nombre !== productoDeCarritoEncontrado);
+function sacarObjetoDeCarrito(productoDeCarritoEncontrado) {
+	carrito = carrito.filter((producto) => producto.Nombre !== productoDeCarritoEncontrado.Nombre);
+	console.log(carrito);
+	nuevoValorDeCarrito = precioFinalCarrito();
 
-    nuevoValorDeCarrito = precioFinalCarrito();
-
-    return nuevoValorDeCarrito;
+	return nuevoValorDeCarrito;
 }
 
-for (let producto of listaDeProductos){
-    mensajeUsuario += `Nombre: ${producto.Nombre} `;
-    mensajeUsuario += `Marca: ${producto.Marca} `
-    mensajeUsuario += `Precio: ${producto.Precio} \n\n`;
-    ;
-};
+for (let producto of listaDeProductos) {
+	mensajeUsuario += `Nombre: ${producto.Nombre} `;
+	mensajeUsuario += `Marca: ${producto.Marca} `;
+	mensajeUsuario += `Precio: ${producto.Precio} \n\n`;
+}
 
-alert(mensajeUsuario)
+alert(mensajeUsuario);
 
 let respuesta1 = prompt("¿Te interesa algun producto? si/no");
 
-while ( respuesta1 === "si"){
+while (respuesta1 === "si") {
+	alert("Exelente, te vuelvo a dejar la lista\n\n" + mensajeUsuario);
 
-    alert("Exelente, te vuelvo a dejar la lista\n\n" + mensajeUsuario)
+	let productoAgregado = prompt("Exelente, escribe el nombre del elemento que quieras");
 
-    let productoAgregado = prompt("Exelente, escribe el nombre del elemento que quieras")
+	let productoEncontrado = listaDeProductos.find((producto) => producto.Nombre === productoAgregado);
 
-    let productoEncontrado = listaDeProductos.find( producto => producto.Nombre === productoAgregado )
+	if (productoEncontrado) {
+		agrgarObjetoAlCarrito(productoEncontrado);
+	} else {
+		alert("El producto que estas buscando no existe!");
+	}
 
-    if (productoEncontrado){
+	respuesta1 = prompt("Hay algun otro producto que te interese? si/no");
+}
 
-        agrgarObjetoAlCarrito(productoEncontrado)
-    
+precioFinalCarrito();
 
-    } else {
+let resultado3 = prompt("El total de tu carrito es " + valorDelCarrito + "\n\n ¿Desea quitar algun objeto?");
 
-        alert("El producto que estas buscando no existe!")
-        
-    }
+if (resultado3 === "si") {
+	let productoParaSacar = prompt("¿Cual?");
 
+	let productoDeCarritoEncontrado = carrito.find((producto) => producto.Nombre === productoParaSacar);
 
-    respuesta1 = prompt("Hay algun otro producto que te interese? si/no")
+	if (productoDeCarritoEncontrado) {
+		nuevoValorDeCarrito = sacarObjetoDeCarrito(productoDeCarritoEncontrado);
+	} else {
+		alert("El producto que estas buscando no existe!");
+	}
 
-} 
-
-precioFinalCarrito()
-
-let resultado3 = prompt("El total de tu carrito es " + valorDelCarrito +  "\n\n ¿Desea quitar algun objeto?")
-
-if(resultado3 === "si"){
-    let productoParaSacar = prompt("¿Cual?")
-
-    let productoDeCarritoEncontrado = carrito.find(producto => producto.Nombre === productoParaSacar)
-
-    if (productoDeCarritoEncontrado){
-
-    sacarObjetoDeCarrito(productoDeCarritoEncontrado)
-
-    } else {
-
-        alert("El producto que estas buscando no existe!")
-        
-    }
-
-    alert("El producto fue elmiminado y el nuevo precio es:\n\n" + nuevoValorDeCarrito)
-    
-} 
+	alert("El producto fue elmiminado y el nuevo precio es:\n\n" + nuevoValorDeCarrito);
+}
