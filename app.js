@@ -15,11 +15,14 @@ let carrito = [];
 
 let  valorDelCarrito = 0
 
+let nuevoValorDeCarrito = 0
+
 function agrgarObjetoAlCarrito(productoEncontrado){
     carrito.push(productoEncontrado)
     alert (` ${productoEncontrado.Nombre} se agrego al carrito y tiene un precio de ${productoEncontrado.Precio}`)
 
 }
+
 
 function precioFinalCarrito(){
     for(let producto of carrito){
@@ -29,6 +32,14 @@ function precioFinalCarrito(){
 
     return valorDelCarrito
 
+}
+
+function sacarObjetoDeCarrito(productoDeCarritoEncontrado){
+    carrito = carrito.filter(producto => producto.Nombre !== productoDeCarritoEncontrado);
+
+    nuevoValorDeCarrito = precioFinalCarrito();
+
+    return nuevoValorDeCarrito;
 }
 
 for (let producto of listaDeProductos){
@@ -68,4 +79,23 @@ while ( respuesta1 === "si"){
 
 precioFinalCarrito()
 
-alert("El total de tu carrito es " + valorDelCarrito)
+let resultado3 = prompt("El total de tu carrito es " + valorDelCarrito +  "\n\n ¿Desea quitar algun objeto?")
+
+if(resultado3 === "si"){
+    let productoParaSacar = prompt("¿Cual?")
+
+    let productoDeCarritoEncontrado = carrito.find(producto => producto.Nombre === productoParaSacar)
+
+    if (productoDeCarritoEncontrado){
+
+    sacarObjetoDeCarrito()
+
+    } else {
+
+        alert("El producto que estas buscando no existe!")
+        
+    }
+
+    alert("El producto fue elmiminado y el nuevo precio es:\n\n" + nuevoValorDeCarrito)
+    
+} 
