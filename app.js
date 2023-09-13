@@ -10,11 +10,14 @@ const listaDeProductos = [
 const listaDeProductosHTML = document.getElementById('listaProductosHTML');
 const totalCarritoHTML =  document.getElementById('totalCarritoHTML');
 const carritoHTML = document.getElementById('carritoHTML');
+const productoRepetidoHTML = document.getElementById('productoRepetidoHTML')
+
 
 let carrito = [];
+let productoSeleccionado;
 
 function cargarCarritoAlLocalStorage() {
-	const carritoJSON = localStorage.getItem(carrito);
+	const carritoJSON = localStorage.getItem('carrito');
 	if (carritoJSON){
 		carrito = JSON.parse(carritoJSON);
 		mostrarCarritoEnHTMl();
@@ -37,17 +40,29 @@ function mostrarProductosEnHTML() {
 		
 		const crearBoton = document.createElement('button');
 		crearBoton.innerText = 'Agregar';
-		crearBoton.addEventListener('click', () =>agregarAlCarrito(producto));
+		crearBoton.addEventListener('click', () => {productoSeleccionado = productoElegido(producto);
+		agregarAlCarrito(productoSeleccionado)});
+		
 
 		listarProducto.appendChild(crearBoton);
 		listaDeProductosHTML.appendChild(listarProducto);
 	});
 }
 
-function agregarAlCarrito(producto) {
-    carrito.push(producto);
-    mostrarCarritoEnHTMl();
-	guardarCarritoLocalStorage();
+function productoElegido(producto) {
+	return producto;
+}
+
+function agregarAlCarrito(productoSeleccionado) {
+	const validacion = carrito.includes(productoSeleccionado)
+	if (validacion === false){
+		carrito.push(productoSeleccionado);
+    	mostrarCarritoEnHTMl();
+		guardarCarritoLocalStorage();
+	} else{
+		productoRepetidoHTML.style.display = "block";
+		console.log("Producto Repetido");
+	}
 }
 
 function mostrarCarritoEnHTMl(){
@@ -83,9 +98,29 @@ limpiarCarritoHTML.addEventListener('click', () => borrarCarritoHTML())
 function borrarCarritoHTML() {
     carrito = []; 
     mostrarCarritoEnHTMl();
+	guardarCarritoLocalStorage();
+	
 }
 
 
+const botonSi = document.getElementById('botonSi')
+botonSi .addEventListener('click' , () => {
+	if (productoSeleccionado){
+		confirmarAgregado(productoSeleccionado);
+	}
+		
+});
+
+function confirmarAgregado(productoSeleccionado){
+	carrito.push(productoSeleccionado);
+	productoSeleccionado = undefined;
+	productoRepetidoHTML.style.display = "none";
+	guardarCarritoLocalStorage();
+
+}
+
+
+
 mostrarProductosEnHTML()
-cargarCarritoAlLocalStorage()
+cargarCarritoAlLocalStorage()  
 
