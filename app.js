@@ -21,6 +21,7 @@ function cargarCarritoAlLocalStorage() {
 	if (carritoJSON){
 		carrito = JSON.parse(carritoJSON);
 		mostrarCarritoEnHTMl();
+		//alert(carritoJSON)
 	};
 
 }
@@ -57,8 +58,10 @@ function agregarAlCarrito(productoSeleccionado) {
 	const validacion = carrito.includes(productoSeleccionado)
 	if (validacion === false){
 		carrito.push(productoSeleccionado);
-    	mostrarCarritoEnHTMl();
+    	
 		guardarCarritoLocalStorage();
+	
+		mostrarCarritoEnHTMl();
 	} else{
 		productoRepetidoHTML.style.display = "block";
 		console.log("Producto Repetido");
@@ -104,23 +107,30 @@ function borrarCarritoHTML() {
 
 
 const botonSi = document.getElementById('botonSi')
+
 botonSi .addEventListener('click' , () => {
 	if (productoSeleccionado){
 		confirmarAgregado(productoSeleccionado);
+		
 	}
 		
 });
 
 function confirmarAgregado(productoSeleccionado){
+	//alert(productoSeleccionado)
 	carrito.push(productoSeleccionado);
 	productoSeleccionado = undefined;
 	productoRepetidoHTML.style.display = "none";
 	guardarCarritoLocalStorage();
+	mostrarCarritoEnHTMl()
+	
 
 }
 
 
-
+cargarCarritoAlLocalStorage() 
+mostrarCarritoEnHTMl()
 mostrarProductosEnHTML()
-cargarCarritoAlLocalStorage()  
+console.log (carrito)
+	
 
