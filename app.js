@@ -1,10 +1,19 @@
+class productodelista {
+	constructor(Nombre, Precio, Marca, Descuento){
+	this.Nombre = Nombre;
+	this.Precio = Precio;
+	this.Marca = Marca;
+	this.Descuento = Descuento;
+	}
+}
+
 const listaDeProductos = [
-	{ Nombre: "Zapatilla", Precio: 10000, Marca: "Nike", Codigo: "2001", Descuento: true },
-	{ Nombre: "Pantalon", Precio: 5000, Marca: "Adidas", Codigo: "6071", Descuento: false },
-	{ Nombre: "Mochila", Precio: 9000, Marca: "Underarmour", Codigo: "8933", Descuento: false },
-	{ Nombre: "Buzo", Precio: 9500, Marca: "Nike", Codigo: "7901", Descuento: true },
-	{ Nombre: "Campera", Precio: 12000, Marca: "Adidas", Codigo: "3566", Descuento: false },
-	{ Nombre: "Medias", Precio: 1000, Marca: "Nike", Codigo: "2456", Descuento: true },
+	new productodelista("Zapatilla", 10000, "Nike", true ),
+	new productodelista("Pantalon", 5000, "Adidas", false) ,
+	new productodelista("Mochila", 9000, "Underarmour", false) ,
+	new productodelista("Buzo", 9500, "Nike", true) ,
+	new productodelista("Campera", 12000, "Adidas", false) ,
+	new productodelista("Medias", 1000, "Nike", true) ,
 ];
 
 const listaDeProductosHTML = document.getElementById('listaProductosHTML');
@@ -21,14 +30,17 @@ function cargarCarritoAlLocalStorage() {
 	if (carritoJSON){
 		carrito = JSON.parse(carritoJSON);
 		mostrarCarritoEnHTMl();
-		//alert(carritoJSON)
 	};
 
 }
 
 function guardarCarritoLocalStorage() {
+	if (Array.isArray(carrito) && carrito.every(contenido => typeof contenido === 'object')){
 		localStorage.setItem('carrito', JSON.stringify(carrito))
-
+	}else{
+		alert("Ocurrio un error y el producto no se pude agregar al carrito de manera adcuada")
+		console.log("Hubo un error en el formato de los items del array carrito")
+	}
 }
 
 
@@ -58,7 +70,7 @@ function agregarAlCarrito(productoSeleccionado) {
 	const validacion = carrito.includes(productoSeleccionado)
 	if (validacion === false){
 		carrito.push(productoSeleccionado);
-    	
+
 		guardarCarritoLocalStorage();
 	
 		mostrarCarritoEnHTMl();
@@ -107,7 +119,6 @@ function borrarCarritoHTML() {
 
 
 const botonSi = document.getElementById('botonSi')
-
 botonSi .addEventListener('click' , () => {
 	if (productoSeleccionado){
 		confirmarAgregado(productoSeleccionado);
@@ -116,8 +127,10 @@ botonSi .addEventListener('click' , () => {
 		
 });
 
+const botonNo = document.getElementById('botonNo')
+botonNo.addEventListener('click', () => productoRepetidoHTML.style.display = "none")
+
 function confirmarAgregado(productoSeleccionado){
-	//alert(productoSeleccionado)
 	carrito.push(productoSeleccionado);
 	productoSeleccionado = undefined;
 	productoRepetidoHTML.style.display = "none";
@@ -131,6 +144,7 @@ function confirmarAgregado(productoSeleccionado){
 cargarCarritoAlLocalStorage() 
 mostrarCarritoEnHTMl()
 mostrarProductosEnHTML()
-console.log (carrito)
+console.log (carrito) 
 	
+
 
