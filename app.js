@@ -66,7 +66,7 @@ function productoElegido(producto) {
 	return producto;
 }
 
-function agregarAlCarrito(productoSeleccionado) {
+/* function agregarAlCarrito(productoSeleccionado) {
 	const validacion = carrito.includes(productoSeleccionado)
 	if (validacion === false){
 		carrito.push(productoSeleccionado);
@@ -86,7 +86,34 @@ function agregarAlCarrito(productoSeleccionado) {
 		})
 		console.log("Producto Repetido");
 	}
+} */
+
+function agregarAlCarrito(productoSeleccionado) {
+    const validacion = carrito.includes(productoSeleccionado);
+    if (validacion === false) {
+        carrito.push(productoSeleccionado);
+        guardarCarritoLocalStorage();
+        mostrarCarritoEnHTMl();
+    } else {
+        Swal.fire({
+            title: 'Producto Repetido!',
+            text: "¿Quieres añadirlo de todas formas?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                confirmarAgregado(productoSeleccionado);
+            } else {
+                productoRepetidoHTML.style.display = "none";
+            }
+        });
+    }
 }
+
 
 function mostrarCarritoEnHTMl(){
 	carritoHTML.innerHTML = '';
