@@ -75,7 +75,15 @@ function agregarAlCarrito(productoSeleccionado) {
 	
 		mostrarCarritoEnHTMl();
 	} else{
-		productoRepetidoHTML.style.display = "block";
+		Swal.fire({
+			title: 'Producto Repetiros!',
+			text: "¿Queres añadirlo de todas formas?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si'
+		})
 		console.log("Producto Repetido");
 	}
 }
