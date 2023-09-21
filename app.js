@@ -21,6 +21,7 @@ const totalCarritoHTML =  document.getElementById('totalCarritoHTML');
 const carritoHTML = document.getElementById('carritoHTML');
 const productoRepetidoHTML = document.getElementById('productoRepetidoHTML')
 
+toastr.success('¡Toastr funciona!');
 
 let carrito = [];
 let productoSeleccionado;
@@ -66,27 +67,6 @@ function productoElegido(producto) {
 	return producto;
 }
 
-/* function agregarAlCarrito(productoSeleccionado) {
-	const validacion = carrito.includes(productoSeleccionado)
-	if (validacion === false){
-		carrito.push(productoSeleccionado);
-
-		guardarCarritoLocalStorage();
-	
-		mostrarCarritoEnHTMl();
-	} else{
-		Swal.fire({
-			title: 'Producto Repetiros!',
-			text: "¿Queres añadirlo de todas formas?",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Si'
-		})
-		console.log("Producto Repetido");
-	}
-} */
 
 function agregarAlCarrito(productoSeleccionado) {
     const validacion = carrito.includes(productoSeleccionado);
@@ -94,6 +74,8 @@ function agregarAlCarrito(productoSeleccionado) {
         carrito.push(productoSeleccionado);
         guardarCarritoLocalStorage();
         mostrarCarritoEnHTMl();
+
+		toastr.success('Producto agregado al carrito');
     } else {
         Swal.fire({
             title: 'Producto Repetido!',
@@ -107,9 +89,8 @@ function agregarAlCarrito(productoSeleccionado) {
         }).then((result) => {
             if (result.isConfirmed) {
                 confirmarAgregado(productoSeleccionado);
-            } else {
-                productoRepetidoHTML.style.display = "none";
-            }
+				toastr.success('Producto agregado al carrito');
+            } 
         });
     }
 }
