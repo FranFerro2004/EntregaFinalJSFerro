@@ -7,21 +7,41 @@ class productodelista {
 	}
 }
 
-const listaDeProductos = [
-	new productodelista("Zapatilla", 10000, "Nike", true ),
-	new productodelista("Pantalon", 5000, "Adidas", false) ,
-	new productodelista("Mochila", 9000, "Underarmour", false) ,
-	new productodelista("Buzo", 9500, "Nike", true) ,
-	new productodelista("Campera", 12000, "Adidas", false) ,
-	new productodelista("Medias", 1000, "Nike", true) ,
-];
+let listaDeProductos = [];
+
+
+const fetchProductos = async () => {
+	try{
+		const res = await fetch('../JSON/productos.JSON');
+		const data = await res.json(); 
+
+		listaDeProductos = [];
+
+		data.forEach(elemento =>{
+			const producto = new productodelista(
+				
+				elemento.Nombre,
+				elemento.Precio,
+				elemento.Marca,
+				elemento.Descuento,
+			);
+			listaDeProductos.push(producto);
+		});
+		mostrarProductosEnHTML();
+
+	} catch (error){
+		console.error(error);
+	};
+};
+
+fetchProductos()
 
 const listaDeProductosHTML = document.getElementById('listaProductosHTML');
 const totalCarritoHTML =  document.getElementById('totalCarritoHTML');
 const carritoHTML = document.getElementById('carritoHTML');
 const productoRepetidoHTML = document.getElementById('productoRepetidoHTML')
 
-toastr.success('¡Toastr funciona!');
+
 
 let carrito = [];
 let productoSeleccionado;
@@ -75,7 +95,12 @@ function agregarAlCarrito(productoSeleccionado) {
         guardarCarritoLocalStorage();
         mostrarCarritoEnHTMl();
 
-		toastr.success('Producto agregado al carrito');
+		Toastify({
+			text: 'Producto Agregado!',
+			duration: 3000,
+			gravity: "bottom",
+			position : "right",
+		}).showToast();
     } else {
         Swal.fire({
             title: 'Producto Repetido!',
@@ -89,7 +114,12 @@ function agregarAlCarrito(productoSeleccionado) {
         }).then((result) => {
             if (result.isConfirmed) {
                 confirmarAgregado(productoSeleccionado);
-				toastr.success('Producto agregado al carrito');
+				Toastify({
+					text: 'Producto Agregado!',
+					duration: 3000,
+					gravity: "bottom",
+					position : "right",
+				}).showToast();
             } 
         });
     }

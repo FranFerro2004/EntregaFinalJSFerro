@@ -1,0 +1,39 @@
+    [
+        {
+            "Nombre": "Zapatilla",
+            "Precio": 10000,
+            "Marca": "Nike",
+            "Descuento": true
+        },
+        {
+            "Nombre": "Pantalon",
+            "Precio": 5000,
+            "Marca": "Adidas",
+            "Descuento": false
+        },
+        {
+            "Nombre": "Mochila",
+            "Precio": 9000,
+            "Marca": "Underarmour",
+            "Descuento": false
+        },
+        {
+            "Nombre": "Buzo",
+            "Precio": 9500,
+            "Marca": "Nike",
+            "Descuento": true
+        },
+        {
+            "Nombre": "Campera",
+            "Precio": 12000,
+            "Marca": "Adidas",
+            "Descuento": false
+        },
+        {
+            "Nombre": "Medias",
+            "Precio": 1000,
+            "Marca": "Nike",
+            "Descuento": true
+        }
+    ]
+
