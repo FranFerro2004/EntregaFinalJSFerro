@@ -28,7 +28,7 @@ const fetchProductos = async () => {
 			listaDeProductos.push(producto);
 		});
 		mostrarProductosEnHTML();
-
+		
 	} catch (error){
 		console.error(error);
 	};
@@ -56,13 +56,10 @@ function cargarCarritoAlLocalStorage() {
 }
 
 function guardarCarritoLocalStorage() {
-	if (Array.isArray(carrito) && carrito.every(contenido => typeof contenido === 'object')){
-		localStorage.setItem('carrito', JSON.stringify(carrito))
-	}else{
-		alert("Ocurrio un error y el producto no se pude agregar al carrito de manera adcuada")
-		console.log("Hubo un error en el formato de los items del array carrito")
-	}
+	Array.isArray(carrito) && carrito.every(contenido => typeof contenido === 'object') ? localStorage.setItem('carrito' , JSON.stringify(carrito)) 
+	: (alert("Ocurrio un error y el producto no se pude agregar al carrito de manera adecuada"), console.error("Hubo un error en el formato de los items del array carrito"));
 }
+
 
 
 function mostrarProductosEnHTML() {
